@@ -17,8 +17,9 @@
 		<h3 style="text-align: center;">PLAYER 1 Total</h3>
 		<p id="p1" style="text-align: center; font-size: 20px;">0</p><br>
 
-		<img src="hit.gif" height="75px" onclick="hitp1();" style="right: 775px; top: 285px; position: absolute;">
-		<img src="stand.gif" height="75px" style="right: 615px; top: 285px; position: absolute;">
+		<img src="hit.gif" onclick="hitp1();" height="75px" style="right: 775px; top: 285px; position: absolute;">
+		<img src="stand.gif" onclick="p1Stand();"height="75px" style="right: 615px; top: 285px; position: absolute;">
+		<img src="bust.gif" height="75px" style="right: 490px; top: 285px; position: absolute;">
 		
 		<!-- Player 2 -->
 		<img id="card11" src="14.bmp" width=80px style="right: 1015px;position: absolute;">
@@ -31,8 +32,9 @@
 		<h3 style="text-align: center;">PLAYER 2 Total</h3>
 		<p id="p2" style="text-align: center; font-size: 20px;">0</p><br>
 
-		<img src="hit.gif" height="75px" onclick="hitp2();" style="right: 775px; top: 535px; position: absolute;">
-		<img src="stand.gif" height="75px" style="right: 615px; top: 535px; position: absolute;">
+		<img src="hit.gif" onclick="hitp2();" height="75px" style="right: 775px; top: 535px; position: absolute;">
+		<img src="stand.gif" onclick="p2Stand();"height="75px" style="right: 615px; top: 535px; position: absolute;">
+		<img src="bust.gif" height="75px" style="right: 490px; top: 535px; position: absolute;">
 
 		<!-- Dealer -->
 		<img id="card21" src="52.bmp" width=80px style="right: 1015px;position: absolute;">
@@ -43,7 +45,7 @@
 		<br><br><br><br><br><br><br>
 
 		<h3 style="text-align: center;">DEALER Total</h3>
-		<p id="dealer"style="text-align: center;">0</p><br>
+		<p id="dealer" style="text-align: center;">0</p><br>
 
 	</body>
 
@@ -55,6 +57,7 @@
 		let p1Total = 0;
 		let p2Total = 0;
 		let dealerTotal = 0;
+		let stands = 0;
 	
 		// Randomized Card Variables
 		let playerCard3 = 0;
@@ -357,6 +360,13 @@
 			}
 			p1NumCards ++;
 		}		
+
+		function p1Stand(){
+			stands += 1;
+			if(stands == 2){
+				dealerHit();
+			}
+		}
 		
 		// Player 2
 		playerCard11 = Math.floor(52*Math.random())+1;
@@ -648,6 +658,13 @@
 			}
 			p2NumCards ++;
 		}		
+
+		function p2Stand(){
+			stands += 1;
+			if(stands == 2){
+				dealerHit();
+			}
+		}
 		
 		// Dealer
 		playerCard21 = Math.floor(52*Math.random())+1;
@@ -707,6 +724,238 @@
 		}
 
 		document.getElementById("dealer").innerHTML = dealerTotal;
+
+		function dealerHit(){
+			if(dealerTotal < 17){
+				playerCard22 = Math.floor(52*Math.random())+1;
+				document.getElementById("card22").src = String(playerCard22)+".bmp";
+				// Dealer Card 2
+				if(playerCard22 == 1 || playerCard22 == 14 || playerCard22 == 27 || playerCard22 == 40){
+					dealerTotal += 11;
+				}
+
+				if(playerCard22 == 2 || playerCard22 == 15 || playerCard22 == 28 || playerCard22 == 41){
+					dealerTotal += 2;
+				}		
+
+				if(playerCard22 == 3 || playerCard22 == 16 || playerCard22 == 29 || playerCard22 == 42){
+					dealerTotal += 3;
+				}	
+
+				if(playerCard22 == 4 || playerCard22 == 17 || playerCard22 == 30 || playerCard22 == 43){
+					dealerTotal += 4;
+				}
+
+				if(playerCard22 == 5 || playerCard22 == 18 || playerCard22 == 31 || playerCard22 == 44){
+					dealerTotal += 5;
+				}
+
+				if(playerCard22 == 6 || playerCard22 == 19 || playerCard22 == 32 || playerCard22 == 45){
+					dealerTotal += 6;
+				}
+
+				if(playerCard22 == 7 || playerCard22 == 20 || playerCard22 == 33 || playerCard22 == 46){
+					dealerTotal += 7;
+				}
+
+				if(playerCard22 == 8 || playerCard22 == 21 || playerCard22 == 34 || playerCard22 == 47){
+					dealerTotal += 8;
+				}
+
+				if(playerCard22 == 9 || playerCard22 == 22 || playerCard22 == 35 || playerCard22 == 48){
+					dealerTotal += 9;
+				}
+
+				if(playerCard22 == 10 || playerCard22 == 23 || playerCard22 == 36 || playerCard22 == 49){
+					dealerTotal += 10;
+				}
+
+				if(playerCard22 == 11 || playerCard22 == 24 || playerCard22 == 37 || playerCard22 == 50){
+					dealerTotal += 10;
+				}
+		
+				if(playerCard22 == 12 || playerCard22 == 25 || playerCard22 == 38 || playerCard22 == 51){
+					dealerTotal += 10;
+				}
+
+				if(playerCard22 == 13 || playerCard22 == 26 || playerCard22 == 39 || playerCard22 == 52){
+					dealerTotal += 10;
+				}
+				document.getElementById("dealer").innerHTML = dealerTotal;
+			}
+			if(dealerTotal < 17){
+				playerCard23 = Math.floor(52*Math.random())+1;
+				document.getElementById("card23").src = String(playerCard23)+".bmp";
+				// Dealer Card 3
+				if(playerCard23 == 1 || playerCard23 == 14 || playerCard23 == 27 || playerCard23 == 40){
+					dealerTotal += 11;
+				}
+
+				if(playerCard23 == 2 || playerCard23 == 15 || playerCard23 == 28 || playerCard23 == 41){
+					dealerTotal += 2;
+				}		
+
+				if(playerCard23 == 3 || playerCard23 == 16 || playerCard23 == 29 || playerCard23 == 42){
+					dealerTotal += 3;
+				}	
+
+				if(playerCard23 == 4 || playerCard23 == 17 || playerCard23 == 30 || playerCard23 == 43){
+					dealerTotal += 4;
+				}
+
+				if(playerCard23 == 5 || playerCard23 == 18 || playerCard23 == 31 || playerCard23 == 44){
+					dealerTotal += 5;
+				}
+
+				if(playerCard23 == 6 || playerCard23 == 19 || playerCard23 == 32 || playerCard23 == 45){
+					dealerTotal += 6;
+				}
+
+				if(playerCard23 == 7 || playerCard23 == 20 || playerCard23 == 33 || playerCard23 == 46){
+					dealerTotal += 7;
+				}
+
+				if(playerCard23 == 8 || playerCard23 == 21 || playerCard23 == 34 || playerCard23 == 47){
+					dealerTotal += 8;
+				}
+
+				if(playerCard23 == 9 || playerCard23 == 22 || playerCard23 == 35 || playerCard23 == 48){
+					dealerTotal += 9;
+				}
+
+				if(playerCard23 == 10 || playerCard23 == 23 || playerCard23 == 36 || playerCard23 == 49){
+					dealerTotal += 10;
+				}
+
+				if(playerCard23 == 11 || playerCard23 == 24 || playerCard23 == 37 || playerCard23 == 50){
+					dealerTotal += 10;
+				}
+		
+				if(playerCard23 == 12 || playerCard23 == 25 || playerCard23 == 38 || playerCard23 == 51){
+					dealerTotal += 10;
+				}
+
+				if(playerCard23 == 13 || playerCard23 == 26 || playerCard23 == 39 || playerCard23 == 52){
+					dealerTotal += 10;
+				}
+				document.getElementById("dealer").innerHTML = dealerTotal;
+			}
+			if(dealerTotal < 17){
+				playerCard24 = Math.floor(52*Math.random())+1;
+				document.getElementById("card24").src = String(playerCard24)+".bmp";
+				// Dealer Card 4
+				if(playerCard24 == 1 || playerCard24 == 14 || playerCard24 == 27 || playerCard24 == 40){
+					dealerTotal += 11;
+				}
+
+				if(playerCard24 == 2 || playerCard24 == 15 || playerCard24 == 28 || playerCard24 == 41){
+					dealerTotal += 2;
+				}		
+
+				if(playerCard24 == 3 || playerCard24 == 16 || playerCard24 == 29 || playerCard24 == 42){
+					dealerTotal += 3;
+				}	
+
+				if(playerCard24 == 4 || playerCard24 == 17 || playerCard24 == 30 || playerCard24 == 43){
+					dealerTotal += 4;
+				}
+
+				if(playerCard24 == 5 || playerCard24 == 18 || playerCard24 == 31 || playerCard24 == 44){
+					dealerTotal += 5;
+				}
+
+				if(playerCard24 == 6 || playerCard24 == 19 || playerCard24 == 32 || playerCard24 == 45){
+					dealerTotal += 6;
+				}
+
+				if(playerCard24 == 7 || playerCard24 == 20 || playerCard24 == 33 || playerCard24 == 46){
+					dealerTotal += 7;
+				}
+
+				if(playerCard24 == 8 || playerCard24 == 21 || playerCard24 == 34 || playerCard24 == 47){
+					dealerTotal += 8;
+				}
+
+				if(playerCard24 == 9 || playerCard24 == 22 || playerCard24 == 35 || playerCard24 == 48){
+					dealerTotal += 9;
+				}
+
+				if(playerCard24 == 10 || playerCard24 == 23 || playerCard24 == 36 || playerCard24 == 49){
+					dealerTotal += 10;
+				}
+
+				if(playerCard24 == 11 || playerCard24 == 24 || playerCard24 == 37 || playerCard24 == 50){
+					dealerTotal += 10;
+				}
+		
+				if(playerCard24 == 12 || playerCard24 == 25 || playerCard24 == 38 || playerCard24 == 51){
+					dealerTotal += 10;
+				}
+
+				if(playerCard24 == 13 || playerCard24 == 26 || playerCard24 == 39 || playerCard24 == 52){
+					dealerTotal += 10;
+				}
+				document.getElementById("dealer").innerHTML = dealerTotal;
+			}
+			if(dealerTotal < 17){
+				playerCard25 = Math.floor(52*Math.random())+1;
+				document.getElementById("card25").src = String(playerCard25)+".bmp";
+				// Dealer Card 5
+				if(playerCard25 == 1 || playerCard25 == 14 || playerCard25 == 27 || playerCard25 == 40){
+					dealerTotal += 11;
+				}
+
+				if(playerCard25 == 2 || playerCard25 == 15 || playerCard25 == 28 || playerCard25 == 41){
+					dealerTotal += 2;
+				}		
+
+				if(playerCard25 == 3 || playerCard25 == 16 || playerCard25 == 29 || playerCard25 == 42){
+					dealerTotal += 3;
+				}	
+
+				if(playerCard25 == 4 || playerCard25 == 17 || playerCard25 == 30 || playerCard25 == 43){
+					dealerTotal += 4;
+				}
+
+				if(playerCard25 == 5 || playerCard25 == 18 || playerCard25 == 31 || playerCard25 == 44){
+					dealerTotal += 5;
+				}
+
+				if(playerCard25 == 6 || playerCard25 == 19 || playerCard25 == 32 || playerCard25 == 45){
+					dealerTotal += 6;
+				}
+
+				if(playerCard25 == 7 || playerCard25 == 20 || playerCard25 == 33 || playerCard25 == 46){
+					dealerTotal += 7;
+				}
+
+				if(playerCard25 == 8 || playerCard25 == 21 || playerCard25 == 34 || playerCard25 == 47){
+					dealerTotal += 8;
+				}
+
+				if(playerCard25 == 9 || playerCard25 == 22 || playerCard25 == 35 || playerCard25 == 48){
+					dealerTotal += 9;
+				}
+
+				if(playerCard25 == 10 || playerCard25 == 23 || playerCard25 == 36 || playerCard25 == 49){
+					dealerTotal += 10;
+				}
+
+				if(playerCard25 == 11 || playerCard25 == 24 || playerCard25 == 37 || playerCard25 == 50){
+					dealerTotal += 10;
+				}
+		
+				if(playerCard25 == 12 || playerCard25 == 25 || playerCard25 == 38 || playerCard25 == 51){
+					dealerTotal += 10;
+				}
+
+				if(playerCard25 == 13 || playerCard25 == 26 || playerCard25 == 39 || playerCard25 == 52){
+					dealerTotal += 10;
+				}
+				document.getElementById("dealer").innerHTML = dealerTotal;
+			}
+		}
+		
 
 	</script>
 </html>
