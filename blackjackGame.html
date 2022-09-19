@@ -19,7 +19,7 @@
 
 		<img src="hit.gif" onclick="hitp1();" height="75px" style="right: 775px; top: 285px; position: absolute;">
 		<img src="stand.gif" onclick="p1Stand();"height="75px" style="right: 615px; top: 285px; position: absolute;">
-		<img src="bust.gif" height="75px" style="right: 490px; top: 285px; position: absolute;">
+		<img id="bust" src="blank.gif" height="90px" style="right: 425px; top: 285px; position: absolute;">
 		
 		<!-- Player 2 -->
 		<img id="card11" src="14.bmp" width=80px style="right: 1015px;position: absolute;">
@@ -184,6 +184,19 @@
 		}
 
 		document.getElementById("p1").innerHTML = p1Total;
+
+		function p1Stand(){
+			stands += 1;
+			if(stands == 2){
+				dealerHit();
+			}
+		}
+
+		function checkp1Bust(){
+			if(p1Total > 21){
+				document.getElementById("bust").src = "busted.gif";
+			}
+		}
 
 		// Hit Button Player 1
 		function hitp1(){
@@ -359,14 +372,8 @@
 				document.getElementById("p1").innerHTML = p1Total;
 			}
 			p1NumCards ++;
+			checkp1Bust();
 		}		
-
-		function p1Stand(){
-			stands += 1;
-			if(stands == 2){
-				dealerHit();
-			}
-		}
 		
 		// Player 2
 		playerCard11 = Math.floor(52*Math.random())+1;
