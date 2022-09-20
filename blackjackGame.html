@@ -51,6 +51,9 @@
 		<h3 style="text-align: center;">DEALER Total</h3>
 		<p id="dealer" style="text-align: center;">0</p><br>
 
+		<img id="dealerBust" src="blank.gif" height="100px" style="left: 590px; top: 845px; position: absolute;">
+
+
 	</body>
 
 	<script>
@@ -61,8 +64,11 @@
 		let p1Total = 0;
 		let p2Total = 0;
 		let dealerTotal = 0;
-		let stands = 0;
-		let playerBusts = 0;
+		let player1Stands = false;
+		let player2Stands = false;
+		let player1Busts = false;
+		let player2Busts = false;
+		let dealerBusts = false;
 	
 		// Randomized Card Variables
 		let playerCard3 = 0;
@@ -75,11 +81,75 @@
 		let playerCard24 = 0;
 		let playerCard25 = 0;
 
+		// Checks if players have busted
+		function checkWinner(){
+			if(player1Busts && player2Busts){
+				document.getElementById("winCondition").src = "dealerWins.gif";
+			}
+			else if(player1Stands && player2Busts || player1Busts && player2Stands || player1Stands && player2Stands){
+				dealerHit();
+				evaluateTotals();
+			}
+		}
+		
+		// Compares Totals to see who 
+		function evaluateTotals(){
+			// Player 1 Wins
+			if(!player1Busts){
+				if(p1Total > dealerTotal && p1Total > p2Total || player2Busts && p1Total > dealerTotal || dealerBusts && p1Total > p2Total || player2Busts && dealerBusts){
+					document.getElementById("winCondition").src = "player1Wins.gif";
+				}
+			}
+			// Player 2 Wins
+			if(!player2Busts){
+				if(p2Total > dealerTotal && p2Total > p1Total || player1Busts && p2Total > dealerTotal || dealerBusts && p2Total > p1Total || player1Busts && dealerBusts){
+					document.getElementById("winCondition").src = "player2Wins.gif";
+				}
+			}
+			// Dealer Wins
+			if(!dealerBusts){
+				if(dealerTotal > p1Total && dealerTotal > p2Total || player1Busts && dealerTotal > p2Total || player2Busts && dealerTotal > p1Total){
+					document.getElementById("winCondition").src = "dealerWins.gif";
+				}
+			}
+
+			// Tie Condition
+			if(player2Busts && p1Total == dealerTotal || dealerBusts && p1Total == p2Total || player1Busts && p2Total == dealerTotal || p1Total == p2Total == dealerTotal|| p2Total < p1Total && p1Total == dealerTotal || dealerTotal < p1Total && p1Total == p2Total || p1Total < p2Total && p2Total == dealerTotal){
+				document.getElementById("winCondition").src = "tie.gif";
+			}
+			console.log("evaluating totals");		
+		}
+
+		function checkDealerBust(){
+			if(dealerTotal > 21){
+				document.getElementById("dealerBust").src = "busted.gif";
+				dealerBusts = true;
+			}
+		}
+
 		// Player 1 Randomized Cards (playerCards)
 		playerCard1 = Math.floor(52*Math.random())+1;
 		document.getElementById("card1").src = String(playerCard1)+".bmp";
 		playerCard2 = Math.floor(52*Math.random())+1;
 		document.getElementById("card2").src = String(playerCard2)+".bmp";
+
+		function p1Stand(){
+			if(!player1Busts){
+				player1Stands = true;
+				if(player1Stands && player2Stands || player1Stands && player2Busts){
+					dealerHit();
+					checkDealerBust();
+				}
+			}
+			checkWinner();
+		}
+
+		function checkp1Bust(){
+			if(p1Total > 21){
+				document.getElementById("p1Bust").src = "busted.gif";
+				player1Busts = true;
+			}
+		}
 		
 		// P1 Card 1
 		if(playerCard1 == 1 || playerCard1 == 14 || playerCard1 == 27 || playerCard1 == 40){
@@ -189,27 +259,6 @@
 		}
 
 		document.getElementById("p1").innerHTML = p1Total;
-
-		function p1Stand(){
-			stands += 1;
-			if(stands == 2){
-				dealerHit();
-			}
-		}
-
-		function checkp1Bust(){
-			if(p1Total > 21){
-				document.getElementById("p1Bust").src = "busted.gif";
-				playerBusts += 1;
-			}
-		}
-
-		// Checks number of players who busted
-		function checkWinner(){
-			if(playerBusts == 2){
-				document.getElementById("winCondition").src = "dealerWins.gif";
-			}
-		}
 
 		// Hit Button Player 1
 		function hitp1(){
@@ -395,6 +444,24 @@
 		playerCard12 = Math.floor(52*Math.random())+1;
 		document.getElementById("card12").src = String(playerCard12)+".bmp";
 
+		function p2Stand(){
+			if(!player2Busts){
+				player2Stands = true;
+				if(player1Stands && player2Stands || player1Busts && player2Stands){
+					dealerHit();
+					checkDealerBust();
+				}
+			}
+			checkWinner();
+		}
+
+		function checkp2Bust(){
+			if(p2Total > 21){
+				document.getElementById("p2Bust").src = "busted.gif";
+				player2Busts = true;
+			}
+		}
+
 		// P2 Card 1
 		if(playerCard11 == 1 || playerCard11 == 14 || playerCard11 == 27 || playerCard11 == 40){
 			p2Total += 11;
@@ -503,20 +570,6 @@
 		}
 
 		document.getElementById("p2").innerHTML = p2Total;
-
-		function p2Stand(){
-			stands += 1;
-			if(stands == 2){
-				dealerHit();
-			}
-		}
-
-		function checkp2Bust(){
-			if(p2Total > 21){
-				document.getElementById("p2Bust").src = "busted.gif";
-				playerBusts += 1;
-			}
-		}
 
 		// Hit Button Player 2
 		function hitp2(){
@@ -984,6 +1037,7 @@
 				}
 				document.getElementById("dealer").innerHTML = dealerTotal;
 			}
+			checkDealerBust();
 		}
 		
 
